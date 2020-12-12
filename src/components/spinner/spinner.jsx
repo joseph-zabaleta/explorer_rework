@@ -10,13 +10,14 @@ export default function Spinner({ area }) {
 
     return (
         promiseInProgress && (
-        <div id='#container'>
+        <div id='spinnerContainer'>
             <Loader 
                 type="ThreeDots" 
-                color="#2BAD60" 
-                height="100" 
-                width="100" />
-            <h4>Loading in Progress...</h4>
+                color="green"
+                secondaryColor="#bab7b6"
+                height="25" 
+                width="300" />
+
         </div>
         )
     )

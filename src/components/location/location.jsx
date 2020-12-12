@@ -1,18 +1,25 @@
 import React from 'react';
 
-import Spinner from '../spinner/spinner.jsx';
-import { areas } from '../../utils/constants.js';
 import './location.scss';
+
 
 export default function Location({ location }) {
 
     return (
         
-        <div className='locationContainer'>
-            Location Component
-            <Spinner area={ areas.location }/>
-        </div> 
+        <div id="locationContainer">
+            <p style={{textAlign: 'center'}}>
+                Location Component
+            </p>
+            <br></br>
+            <p>Name: {location.address}</p>
+            <br></br>
+            <p>
+                <span>Lat: {location.lat}</span>
+                <span style={{paddingLeft: '20px'}}>Lon: {location.lon}</span>
+            </p>
+        </div>
 
     )
 
-}
+};

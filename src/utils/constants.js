@@ -7,6 +7,7 @@ export const areas = {
     location: 'location-area',
     weather: 'weather-area',
     trails: 'trails-area',
+    default: 'default-area'
 };
 
 /**
@@ -21,3 +22,11 @@ export const sleeper = (ms, area) => {
     };
 
 };
+
+// export const sleeper = (ms) => {
+
+//   return function(x) {
+//     return trackPromise( new Promise(resolve => setTimeout(() => resolve(x), ms)));
+//   };
+
+// };

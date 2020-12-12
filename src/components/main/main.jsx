@@ -1,61 +1,73 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from 'axios'
 
 import Form from '../form/form.jsx';
 import Location from '../location/location.jsx';
+import Trails from '../trails/trails.jsx';
 import Spinner from '../spinner/spinner.jsx';
+import { trackPromise } from 'react-promise-tracker';
 import { areas, sleeper } from '../../utils/constants.js';
 import './main.scss';
 
 
+//dummy data
+// const location = {
+//     display_name: "Vancouver, Clark County, Washington, USA",
+//     lat: "45.6306954",
+//     lon: "-122.6744557"
+// }
+
 export default function Main() {
-
-
-    const [state, setState] = useState({
-        location: {
-            address: '',
-            lat: '',
-            lon: '',
-        }
-    });
-
-
-    const handleFormSubmit = (query) => {
-       
+    
+    const [target, setTarget] = useState({});
+    const [viewComponent, setViewComponent] = useState(false);
+    
+    const handleFormSubmit = (input) => {
+    
         const key = process.env.REACT_APP_LOCATION_KEY;
-        const city = query;
+        const city = 'vancouver, wa';
         const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${city}&format=json&limit=1`;
 
-        const locationBody = {}
-
         axios.get(url)
-            .then(sleeper(3000, areas.location))
+            .then(setViewComponent(false))
+            .then(sleeper(3000, areas.default))
             .then((response) => {
-
-                console.log(response.data[0])
-
-                const {display_name, lat, lon } = response.data[0];
-                locationBody.address = display_name;
-                locationBody.lat = lat;
-                locationBody.lon = lon;
-                
-            });
-        
-
-        setState({
-            ...state,
-            location: locationBody,
-        });
     
-    }     
-                
+                const {display_name, lat, lon} = response.data[0];
+
+                setTarget({
+                    ...target,
+                    address: display_name,
+                    lat,
+                    lon,
+                }); 
+            })
+            .then(() => {
+                setViewComponent(true);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
 
     return (
         <main>
-            Main Body Element
+            <p style={{textAlign: 'center'}}>
+                Main Body Element
+            </p>
             <Form handleFormSubmit={ handleFormSubmit }/>
-            <Location display={ state.isLocationActive } location={ state.location } />
-            <Spinner area={ areas.weather }/>
+
+            <Spinner area={areas.default} />
+
+            {viewComponent && 
+                <React.Fragment>
+                    <Location location={target} />
+                    <Trails location={target} />
+                </React.Fragment>
+            }
+
+
         </main>
     )
 
