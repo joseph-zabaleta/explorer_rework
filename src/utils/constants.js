@@ -7,6 +7,7 @@ export const areas = {
     location: 'location-area',
     weather: 'weather-area',
     trails: 'trails-area',
+    movies: 'movies-area',
     default: 'default-area'
 };
 

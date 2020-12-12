@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
+
 import { areas } from '../../utils/constants.js';
 import Spinner from '../spinner/spinner.jsx';
-import axios from 'axios';
-
 import './trails.scss';
+
 
 export default function Trails({ location }) {
 
-    
     const [trails, setTrails] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
 
     useEffect(() => {
 
@@ -28,6 +29,7 @@ export default function Trails({ location }) {
 
 
     if (isLoading || !trails.length) return <Spinner area={areas.trails} />;
+
 
     return (
        
@@ -51,9 +53,7 @@ export default function Trails({ location }) {
                         </span>
                     </p>
                 </div>
-            ))
-
-            }
+            ))}
 
         </div>
 
